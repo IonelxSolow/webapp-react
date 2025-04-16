@@ -35,7 +35,7 @@ export default function HomePage() {
               {movies.map((movie) => (
                 <div key={movie.id} className="col">
                   <div className="card h-100">
-                    <img src={`http://localhost:3000/images/${movie?.image}`} alt="" className="card-img-top"/>
+                    <img src={`http://localhost:3000/images/${movie?.image}`} alt={movie.title} className="card-img-top"/>
                     <div className="card-body">
                       <h3>{movie.title}</h3>
                       <p>{movie.director}</p>
