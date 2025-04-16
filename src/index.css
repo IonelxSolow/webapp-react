@@ -33,6 +33,10 @@ header a:hover {
   color: #ffc107;
 }
 
+.bg-secondary::placeholder {
+  color: lightgray!important; /* Bootstrap's text-muted color */
+  opacity: 0.8;
+}
 
 footer a {
   transition: all 0.3s ease;

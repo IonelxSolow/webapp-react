@@ -1,7 +1,14 @@
+import { useState } from "react";
+
+
 export default function MovieReviewCard({ userReview }) {
 
     const {name, text, vote, updated_at} = userReview;
 
+       const formatDate = (dateString) => {
+         return new Date(dateString).toLocaleDateString("en-GB");
+       };
+    
 
         function ratingStars(vote) {
             const stars = [];
@@ -17,19 +24,20 @@ export default function MovieReviewCard({ userReview }) {
                return [...stars, ...empty];
         }
 
+       
 
 return (
   <div className="card mb-3 bg-secondary text-white rounded-3">
     <div className="card-header d-flex justify-content-between align-items-center">
       <h3>{name}</h3>
-      <div className="updated-at">Created at: {updated_at}</div>
+      <div className="updated-at">Created at: {formatDate(updated_at)}</div>
       <div className="vote">{ratingStars(vote)}</div>
     </div>
     <div className="card-body">
       <p>{text}</p>
     </div>
     <div className="card-footer">
-      <div className="updated-at">Updated at: {updated_at}</div>
+      <div className="updated-at">Updated at: {formatDate(updated_at)}</div>
     </div>
   </div>
 );

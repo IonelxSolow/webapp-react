@@ -21,6 +21,12 @@ export default function MovieDetailPage() {
       });
   }, []);
 
+   const handleSubmit = (e) => {
+     e.preventDefault();
+     console.log("Form submitted!");
+     // sumbission logic here
+   };
+
   return (
     <>
       {/* jumbotron */}
@@ -34,7 +40,7 @@ export default function MovieDetailPage() {
           </p>
         </div>
       </div>
-   
+
       <div className="container">
         <div className="row">
           {/* Movie Image Column */}
@@ -50,7 +56,7 @@ export default function MovieDetailPage() {
           <div className="col-md-8">
             {movie?.reviews && movie.reviews.length > 0 ? (
               <div>
-                <h2>Reviews</h2>
+                <h2 className="text-white">Reviews</h2>
                 {movie.reviews.map((review) => (
                   <MovieReviewCard key={review.id} userReview={review} />
                 ))}
@@ -58,6 +64,46 @@ export default function MovieDetailPage() {
             ) : (
               <p>No reviews yet</p>
             )}
+          </div>
+          <hr />
+          <div className="container">
+            <div className="add-review">
+              <h3 className="text-white">Add a Review</h3>
+
+              <form onSubmit={handleSubmit} action="POST" className="mb-3">
+                <div className="mb-3">
+                  <label htmlFor="username" className="form-label text-white">
+                    Username
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control bg-secondary text-white"
+                    name="username"
+                    id="username"
+                    aria-describedby="helpId"
+                    placeholder="anonymous"
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="vote" className="form-label text-white">Vote</label>
+                  <input type="number" className="form-control bg-secondary text-white" name="vote" id="vote" min="1" max="5" placeholder="1" aria-describedby="helpId" />
+                </div>
+
+                <div className="mb-3">
+                  <textarea
+                    className="form-control bg-secondary text-white"
+                    rows="3"
+                    placeholder="Write your review here..."
+                  ></textarea>
+                </div>
+                <div className="mb-3">
+                  <button type="submit" className="btn btn-secondary mt-2">
+                    Submit Review
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

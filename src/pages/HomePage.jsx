@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
+import MovieCard from "../components/MovieCard";
 
 
 export default function HomePage() {
@@ -33,21 +34,7 @@ export default function HomePage() {
         <div className="container">
           <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
             {movies.map((movie) => (
-              <div key={movie.id} className="col">
-                <div className="card bg-secondary text-white rounded-3 shadow-sm hover-zoom">
-                  <Link to={`/movie/${movie.id}`}>
-                    <img
-                      src={`http://localhost:3000/images/${movie?.image}`}
-                      alt={movie.title}
-                      className="card-img-top"
-                    />
-                  </Link>
-                  <div className="card-body">
-                    <h3>{movie.title}</h3>
-                    <p>{movie.director}</p>
-                  </div>
-                </div>
-              </div>
+             <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
         </div>
