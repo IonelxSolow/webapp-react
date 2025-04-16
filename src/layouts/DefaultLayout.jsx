@@ -9,7 +9,7 @@ export default function DefaultLayout() {
     return (
       <>
         <Header />
-        <main className="mb-5">
+        <main className="mb-5 bg-dark">
             <Outlet />
         </main>
         <Footer />

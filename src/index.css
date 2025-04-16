@@ -2,13 +2,44 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
+header a {
+  transition: all 0.3s ease;
+}
+
+header a:hover {
+  color: #a9a9a9 !important; /* Light gray color */
+  transform: scale(1.1);
+  display: inline-block;
+}
+
 .movies{
  .card{
+  transition: transform 0.3s ease;
+  &:hover{
+  transform: scale(1.02);
+  cursor: pointer;
+  }
        img{
-          aspect-ratio: 1;
+            width: 100%;
+            height: 40rem;
+         
           object-fit: cover;
-        
         }
     }
 
+}
+
+.star-rating{
+  color: #ffc107;
+}
+
+
+footer a {
+  transition: all 0.3s ease;
+}
+
+footer a:hover {
+  color: #a9a9a9 !important; /* Light gray color */
+  transform: scale(1.1);
+  display: inline-block;
 }

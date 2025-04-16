@@ -1,14 +1,14 @@
+import { NavLink } from "react-router-dom";
+
 export default function Header() {
   return (
     <header>
-      <nav className="navbar navbar-expand navbar-light bg-light">
-        <div className="nav navbar-nav">
-          <a className="nav-item nav-link active" href="#" aria-current="page">
-            Home <span className="visually-hidden">(current)</span>
-          </a>
-          <a className="nav-item nav-link" href="#">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container">
+          <NavLink className="navbar-brand" to="/">
+            <i className="bi bi-film me-2"></i>
             Movies
-          </a>
+          </NavLink>
         </div>
       </nav>
     </header>

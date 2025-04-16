@@ -1,5 +1,6 @@
 import { useState, useEffect, use } from "react";
 import { useParams } from "react-router-dom";
+import MovieReviewCard from "../components/MovieReviewCard";
 
 export default function MovieDetailPage() {
   // get the route param from the url
@@ -23,13 +24,17 @@ export default function MovieDetailPage() {
   return (
     <>
       {/* jumbotron */}
-      <div className="p-5 mb-4 bg-light rounded-3">
-        <div className="container-fluid py-5">
-          <h1 className="display-5 fw-bold">{movie?.title && movie.title}</h1>
-          <p className="col-md-8 fs-4">{movie?.abstract && movie.abstract}</p>
+      <div className="p-2 mb-4 bg-dark text-white">
+        <div className="container-fluid py-2 text-center">
+          <h1 className="display-5 fw-bold text-white mx-auto">
+            {movie?.title && movie.title}
+          </h1>
+          <p className="fs-4 text-light mx-auto" style={{ maxWidth: "800px" }}>
+            {movie?.abstract && movie.abstract}
+          </p>
         </div>
       </div>
-
+   
       <div className="container">
         <div className="row">
           {/* Movie Image Column */}
@@ -47,23 +52,7 @@ export default function MovieDetailPage() {
               <div>
                 <h2>Reviews</h2>
                 {movie.reviews.map((review) => (
-                  <div className="card mb-3" key={review.id}>
-                    <div className="card-header d-flex justify-content-between align-items-center">
-                      <h3>{review?.name}</h3>
-                      <div className="updated-at">
-                        Created at: {review?.updated_at}
-                      </div>
-                      <div className="vote">vote: {review?.vote}</div>
-                    </div>
-                    <div className="card-body">
-                      <p>{review?.text}</p>
-                    </div>
-                    <div className="card-footer">
-                      <div className="updated-at">
-                        Updated at: {review?.updated_at}
-                      </div>
-                    </div>
-                  </div>
+                  <MovieReviewCard key={review.id} userReview={review} />
                 ))}
               </div>
             ) : (
