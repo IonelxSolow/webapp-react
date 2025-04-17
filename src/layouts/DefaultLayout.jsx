@@ -9,7 +9,7 @@ export default function DefaultLayout() {
     return (
       <>
         <Header />
-        <main className="mb-5 bg-dark">
+        <main className="mb-5 bg-dark" style={{ minHeight: "calc(100vh - 56px)" }}>
             <Outlet />
         </main>
         <Footer />

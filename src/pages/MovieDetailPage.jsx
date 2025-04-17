@@ -1,6 +1,7 @@
 import { useState, useEffect, use } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import MovieReviewCard from "../components/MovieReviewCard";
+import MovieReviewForm from "../components/reviews/MovieReviewForm";
 
 export default function MovieDetailPage() {
   // get the route param from the url
@@ -9,11 +10,18 @@ export default function MovieDetailPage() {
   // prepare the state to hold the movie data
   const [movie, setMovie] = useState({});
 
+  // create an instance of the navigate function to redirect the user
+  const navigate = useNavigate();
+
+  // fetch the movie data from the api
   useEffect(() => {
     fetch("http://localhost:3000/api/v1/movies/" + id)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        if(data?.error){
+           navigate('/404')
+        }
         setMovie(data);
       })
       .catch((err) => {
@@ -21,11 +29,7 @@ export default function MovieDetailPage() {
       });
   }, []);
 
-   const handleSubmit = (e) => {
-     e.preventDefault();
-     console.log("Form submitted!");
-     // sumbission logic here
-   };
+   
 
   return (
     <>
@@ -78,54 +82,7 @@ export default function MovieDetailPage() {
           <hr />
 
           <div className="container">
-            <div className="add-review">
-              <h3 className="text-white">Add a Review</h3>
-
-              <form onSubmit={handleSubmit} action="POST" className="mb-3">
-                <div className="mb-3">
-                  <label htmlFor="username" className="form-label text-white">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control bg-secondary text-white"
-                    name="username"
-                    id="username"
-                    aria-describedby="helpId"
-                    placeholder="anonymous"
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="vote" className="form-label text-white">
-                    Vote
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control bg-secondary text-white"
-                    name="vote"
-                    id="vote"
-                    min="1"
-                    max="5"
-                    placeholder="1"
-                    aria-describedby="helpId"
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <textarea
-                    className="form-control bg-secondary text-white"
-                    rows="3"
-                    placeholder="Write your review here..."
-                  ></textarea>
-                </div>
-                <div className="mb-3">
-                  <button type="submit" className="btn btn-secondary mt-2">
-                    Submit Review
-                  </button>
-                </div>
-              </form>
-            </div>
+              <MovieReviewForm movieId={movie.id} />
           </div>
         </div>
       </div>
