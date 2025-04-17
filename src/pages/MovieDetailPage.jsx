@@ -57,15 +57,26 @@ export default function MovieDetailPage() {
             {movie?.reviews && movie.reviews.length > 0 ? (
               <div>
                 <h2 className="text-white">Reviews</h2>
-                {movie.reviews.map((review) => (
-                  <MovieReviewCard key={review.id} userReview={review} />
-                ))}
+                <div
+                  className="reviews-container"
+                  style={{
+                    maxHeight: "600px",
+                    overflowY: "auto",
+                    paddingRight: "10px",
+                  }}
+                >
+                  {movie.reviews.slice(0, 3).map((review) => (
+                    <MovieReviewCard key={review.id} userReview={review} />
+                  ))}
+                </div>
               </div>
             ) : (
               <p>No reviews yet</p>
             )}
           </div>
+
           <hr />
+
           <div className="container">
             <div className="add-review">
               <h3 className="text-white">Add a Review</h3>
@@ -86,8 +97,19 @@ export default function MovieDetailPage() {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="vote" className="form-label text-white">Vote</label>
-                  <input type="number" className="form-control bg-secondary text-white" name="vote" id="vote" min="1" max="5" placeholder="1" aria-describedby="helpId" />
+                  <label htmlFor="vote" className="form-label text-white">
+                    Vote
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control bg-secondary text-white"
+                    name="vote"
+                    id="vote"
+                    min="1"
+                    max="5"
+                    placeholder="1"
+                    aria-describedby="helpId"
+                  />
                 </div>
 
                 <div className="mb-3">
