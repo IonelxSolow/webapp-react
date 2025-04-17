@@ -69,8 +69,8 @@ export default function MovieDetailPage() {
                     paddingRight: "10px",
                   }}
                 >
-                  {movie.reviews.slice(0, 3).map((review) => (
-                    <MovieReviewCard key={review.id} userReview={review} />
+                  {movie.reviews.map((text) => (
+                    <MovieReviewCard key={text.id} userReview={text} />
                   ))}
                 </div>
               </div>
