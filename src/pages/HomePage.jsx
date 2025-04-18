@@ -1,19 +1,32 @@
 import { useState, useEffect } from "react";
 
 import MovieCard from "../components/MovieCard";
+import GlobalContext from "../contexts/GlobalContext";
+import { useContext } from "react";
 
 
 export default function HomePage() {
   const [movies, setMovies] = useState([]);
+  const { setIsLoading } = useContext(GlobalContext);
 
   useEffect(() => {
+
+    setIsLoading(true);
+    
     fetch("http://localhost:3000/api/v1/movies")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         setMovies(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching movies:", error);
+      })
+
+      .finally(() => {
+        setIsLoading(false);
       });
-  }, []);
+  }, [setIsLoading]);
 
   return (
     <>

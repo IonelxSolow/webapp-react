@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 export default function MovieReviewForm({movieId}) {
@@ -7,7 +8,8 @@ export default function MovieReviewForm({movieId}) {
         console.log(movieId, 'movieId from MovieReviewForm');
         const api_url = 'http://localhost:3000/api/v1/movies/' + movieId + '/reviews';
         console.log(api_url, 'api_url from MovieReviewForm');
-
+        
+        const navigate = useNavigate();
         // add a state object for the form fields
 
         const initialFormData = {
@@ -18,6 +20,8 @@ export default function MovieReviewForm({movieId}) {
         const [formData, setFormData] = useState(initialFormData)
 
         const [formErrors, setFormErrors] = useState({})
+
+        const [success, setSuccess] = useState(false)
         const isFormValid = (data) => {
             const errors = {}
             //check fi the fields are empty
@@ -80,8 +84,17 @@ export default function MovieReviewForm({movieId}) {
                 },
             body: JSON.stringify(formData)
         }).then(response => response.json())
-            .then(data => {
+          .then(data => {
                 console.log('Form submitted successfully', data);
+                if(data?.message){
+                  setSuccess(data.message);
+
+                  setTimeout(() => {
+                    navigate(0)
+
+                    setSuccess(false);
+                  }, 2000);
+                }
             })
             .catch(error => {
                 console.log('Error submitting form', error);
@@ -101,7 +114,11 @@ export default function MovieReviewForm({movieId}) {
                 </ul>
             </div>
         )}
-
+        {success && (
+          <div className="alert alert-success" role="alert">
+            {success}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} action="POST" className="mb-3">
           <div className="mb-3">

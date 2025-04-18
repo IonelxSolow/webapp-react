@@ -1,7 +1,11 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import MovieReviewCard from "../components/MovieReviewCard";
 import MovieReviewForm from "../components/reviews/MovieReviewForm";
+import GlobalContext from "../contexts/GlobalContext";
+import { useContext } from "react";
+
+
 
 export default function MovieDetailPage() {
   // get the route param from the url
@@ -13,8 +17,13 @@ export default function MovieDetailPage() {
   // create an instance of the navigate function to redirect the user
   const navigate = useNavigate();
 
+  const { setIsLoading } = useContext(GlobalContext);
+
+  
+
   // fetch the movie data from the api
   useEffect(() => {
+    setIsLoading(true);
     fetch("http://localhost:3000/api/v1/movies/" + id)
       .then((response) => response.json())
       .then((data) => {
@@ -23,9 +32,13 @@ export default function MovieDetailPage() {
            navigate('/404')
         }
         setMovie(data);
+     
       })
       .catch((err) => {
         console.log("ERROR", err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
