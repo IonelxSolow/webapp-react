@@ -27,7 +27,7 @@ function App() {
             {/* Auth routes */}
               <Route path="/login" Component={LoginPage} />
               <Route path="/register" Component={RegisterPage} />
-
+ 
 
           </Route>
         </Routes>
