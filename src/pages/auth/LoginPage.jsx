@@ -56,7 +56,7 @@ const LoginPage = () => {
                          email: "",
                          password: "",
                        });
-                       navigate("/dashboard"); // Redirect to dashboard
+                       navigate("/loggedin"); // Redirect to dashboard
                      }
                    });
                  })
