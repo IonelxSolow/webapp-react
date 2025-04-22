@@ -1,12 +1,44 @@
-# React + Vite
+# TODOS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BACKEND DAY 0:
 
-Currently, two official plugins are available:
+- [x] Express API server
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+FRONT DAY1:
 
-## Expanding the ESLint configuration
+- [x] Add route for the single book page
+- [x] Add component for the single book page
+- [x] Use useEffect, useParams (to get the route param) and useState to fetch the book data
+- [x] Add the book's reviews card (extra: star rating)
+- [x] Complete navigation menu use NavLink component in the header
+- [x] Add the add book review form
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+FRONT DAY2:
+
+- [x] Add 404 route
+- [x] Handle 404 error for single books (useNavigate)
+- [x] Handle the review form submission
+- [x] Implement review form validation
+- [x] Add global context for the loader
+- [x] FRONT: Add authentication form (login/register)
+- [x] Native implementation EXPRESS BACKEND API SERVER: Implement authentication routes (login/register)
+- [x] Add average rating ( EXPRESS: update the sql query to also get the ROUND(AVG(vote)) as average_rating )
+
+**extras:**
+
+DAY 4:
+
+- [ ] FRONT: Add authentication and context (useContext) to manage the user state
+- [ ] EXPRESS BACKEND API SERVER: Implement authentication routes (login/register) 
+- [ ] FRONT/BACK: add a form for the authenticated user to add a new book.
+- [ ] FRONT/BACK: add file input to upload a book cover and handle the upload (use multer for the backend)
+
+DAY 5:
+
+- [ ] FRONT: Deployment via netlify
+- [ ] BACK: Deployment node/express api server with mysql db via render.com
+
+---
+
+NOTES:
+Check the on update for the current timestamp updated_at (MYSQL)

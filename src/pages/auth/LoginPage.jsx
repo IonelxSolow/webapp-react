@@ -18,64 +18,68 @@ const LoginPage = () => {
 
     const validate = () => {
         const newErrors = {};
-        if (!form.username) newErrors.username = "Username is required";
+        
         if (!form.email) newErrors.email = "Email is required";
         if (!form.password) newErrors.password = "Password is required";
-        if (form.password !== form.confirmPassword)
-            newErrors.confirmPassword = "Passwords do not match";
+      
         return newErrors;
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        const validationErrors = validate();
-        if (Object.keys(validationErrors).length === 0) {
-            // Submit form logic here
-               fetch("http://localhost:3000/login", {
-                 method: "POST",
-                 headers: {
-                   "Content-Type": "application/json",
-                   Accept: "application/json",
-                 },
-                 body: JSON.stringify(form),
-               })
-                 .then((response) => response.json())
-                 .then((data) => {
-                   console.log("Login successful!", data);
-                   Swal.fire({
-                     title: "Success!",
-                     text: "Login successful!",
-                     icon: "success",
-                     confirmButtonText: "Go to Dashboard",
-                     background: "#2C3034",
-                     color: "#fff",
-                     confirmButtonColor: "#0DCAF0",
-                   }).then((result) => {
-                     if (result.isConfirmed) {
-                       setForm({
-                         email: "",
-                         password: "",
-                       });
-                       navigate("/loggedin"); // Redirect to dashboard
-                     }
-                   });
-                 })
-                 .catch((error) => {
-                   console.error("Login failed:", error);
-                   Swal.fire({
-                     title: "Error!",
-                     text: "Login failed. Please check your credentials.",
-                     icon: "error",
-                     confirmButtonText: "Try Again",
-                     background: "#2C3034",
-                     color: "#fff",
-                     confirmButtonColor: "#0DCAF0",
-                   });
-                 });
-           // alert("Registered successfully!");
-        } else {
-            setErrors(validationErrors);
-        }
+      e.preventDefault();
+      const validationErrors = validate();
+      if (Object.keys(validationErrors).length === 0) {
+        // Submit form logic here
+        fetch("http://localhost:3000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(form),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Login failed");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Login response:", data); // Debug log
+
+            Swal.fire({
+              title: "Success!",
+              text: "Login successful!",
+              icon: "success",
+              confirmButtonText: "Go to Dashboard",
+              background: "#2C3034",
+              color: "#fff",
+              confirmButtonColor: "#0DCAF0",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                setForm({
+                  email: "",
+                  password: "",
+                });
+                navigate("/admin");
+              }
+            });
+          })
+          .catch((error) => {
+            console.error("Login error:", error); // Debug log
+            Swal.fire({
+              title: "Error!",
+              text: "Login failed. Please check your credentials.",
+              icon: "error",
+              confirmButtonText: "Try Again",
+              background: "#2C3034",
+              color: "#fff",
+              confirmButtonColor: "#0DCAF0",
+            });
+          });
+      } else {
+        setErrors(validationErrors);
+      }
     };
 
     return (

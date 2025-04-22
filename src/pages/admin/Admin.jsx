@@ -62,9 +62,9 @@ export default function Admin() {
                   <td>{movie.abstract}</td>
                   <td>{movie.author}</td>
                   <td className="">
-                    <button className="btn btn-success mt-2">View</button>
-                    <button className="btn btn-warning mt-2">Edit</button>
-                    <button className="btn btn-danger mt-2">Delete</button>
+                    <button className="btn btn-success mt-2 m-2">View</button>
+                    <button className="btn btn-warning mt-2 m-2">Edit</button>
+                    <button className="btn btn-danger mt-2 m-2">Delete</button>
                   </td>
                 </tr>
               ))}
