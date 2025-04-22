@@ -32,7 +32,6 @@ export default function LoggedLayout() {
         className="mb-5 bg-dark"
         style={{ minHeight: "calc(100vh - 56px)" }}
       >
-
         <h1 className="text-white">Logged in Layout</h1>
         {/* {isLoading && <LoaderComponent />} */}
         {/* <Outlet /> */}

@@ -1,11 +1,15 @@
 import Swal from "sweetalert2";
 import { useState, useContext } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GlobalContext from "../../contexts/GlobalContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 
 
 const RegisterPage = () => {
+
+    const { login } = useAuth();
+    
 
     const navigate = useNavigate();
 
@@ -30,7 +34,7 @@ const RegisterPage = () => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const validate = () => {
+ /*    const validate = () => {
         const newErrors = {};
         if (!form.username) newErrors.username = "Username is required";
         if (!form.email) newErrors.email = "Email is required";
@@ -38,11 +42,70 @@ const RegisterPage = () => {
         if (form.password !== form.confirmPassword)
             newErrors.confirmPassword = "Passwords do not match";
         return newErrors;
-    };
+    }; */
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        const validationErrors = validate();
+      e.preventDefault();
+
+      console.log("Form submitted:", form); // Debug log
+
+      fetch(registrationUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(form),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Registration response:", data); // Debug log
+          if (data.user) {
+            Swal.fire({
+              title: "Success!",
+              text: "Registration completed successfully",
+              icon: "success",
+              confirmButtonText: "Go to Login",
+              background: "#2C3034",
+              color: "#fff",
+              confirmButtonColor: "#0DCAF0",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                setForm(initialFormState);
+                navigate("/login");
+              }
+            });
+            login(form.email, form.password).then(() => navigate("/admin"));
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: "Registration failed. Please check your data.",
+              icon: "error",
+              confirmButtonText: "Try Again",
+              background: "#2C3034",
+              color: "#fff",
+              confirmButtonColor: "#0DCAF0",
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error during registration:", error);
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong. Please try again.",
+            icon: "error",
+            confirmButtonText: "OK",
+            background: "#2C3034",
+            color: "#fff",
+            confirmButtonColor: "#0DCAF0",
+          });
+        })
+        .finally(() => {
+          setForm(initialFormState);
+        });
+    };
+
+        /* const validationErrors = validate();
         if (Object.keys(validationErrors).length === 0) {
             // Submit form logic here
             fetch(registrationUrl, {
@@ -95,7 +158,7 @@ const RegisterPage = () => {
         }
 
       
-    };
+    }; */
 
     return (
       <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">

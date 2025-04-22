@@ -1,15 +1,24 @@
 import { useState, useEffect } from "react";
 //import GlobalContext from "../../contexts/GlobalContext";
 //import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Admin() {
+  const [movies, setMovies] = useState([]);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  
 
-     const [movies, setMovies] = useState([]);
-    // const { setIsLoading } = useContext(GlobalContext);
-
-     useEffect(() => {
-      // setIsLoading(true);
+  
+  // const { setIsLoading } = useContext(GlobalContext);
+  
+  useEffect(() => {
+    // setIsLoading(true);
+    if (!user) {
+      navigate("/login");
+      
+    }
 
        fetch("http://localhost:3000/api/v1/movies")
          .then((response) => response.json())
@@ -29,7 +38,7 @@ export default function Admin() {
     return (
       <div className="container mt-5 text-white">
         <header className="d-flex justify-content-between align-items-center mb-4">
-          <h1>Admin Page</h1>
+          <h1>{user && `Welcome: ${user?.username}`}</h1>
           <Link className="btn btn-primary" to="/admin/movie/create">
             Add Movie
           </Link>

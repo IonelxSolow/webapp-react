@@ -2,8 +2,10 @@
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const LoginPage = () => {
+    const { login } = useAuth();
     const navigate = useNavigate();
     const [form, setForm] = useState({
         email: "",
@@ -16,16 +18,67 @@ const LoginPage = () => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const validate = () => {
+ /*    const validate = () => {
         const newErrors = {};
         
         if (!form.email) newErrors.email = "Email is required";
         if (!form.password) newErrors.password = "Password is required";
       
         return newErrors;
-    };
+       }; */
 
-    const handleSubmit = (e) => {
+       const handleSubmit = (e) => {
+         e.preventDefault();
+
+         console.log("Form submitted:", form); // Debug log
+
+         login(form.email, form.password)
+           .then((data) => {
+             if (data.user) {
+               Swal.fire({
+                 title: "Success!",
+                 text: "Login successful!",
+                 icon: "success",
+                 confirmButtonText: "Go to Admin Dashboard",
+                 background: "#2C3034",
+                 color: "#fff",
+                 confirmButtonColor: "#0DCAF0",
+               }).then((result) => {
+                 if (result.isConfirmed) {
+                   setForm({
+                     email: "",
+                     password: "",
+                   });
+                   navigate("/admin");
+                 }
+               });
+             } else {
+               Swal.fire({
+                 title: "Error!",
+                 text: "Login failed. Please check your credentials.",
+                 icon: "error",
+                 confirmButtonText: "Try Again",
+                 background: "#2C3034",
+                 color: "#fff",
+                 confirmButtonColor: "#0DCAF0",
+               });
+             }
+           })
+           .catch((error) => {
+             console.error("Login error:", error);
+             Swal.fire({
+               title: "Error!",
+               text: "Something went wrong. Please try again.",
+               icon: "error",
+               confirmButtonText: "OK",
+               background: "#2C3034",
+               color: "#fff",
+               confirmButtonColor: "#0DCAF0",
+             });
+           });
+       };
+       
+    /* const handleSubmit = (e) => {
       e.preventDefault();
       const validationErrors = validate();
       if (Object.keys(validationErrors).length === 0) {
@@ -80,7 +133,7 @@ const LoginPage = () => {
       } else {
         setErrors(validationErrors);
       }
-    };
+    }; */
 
     return (
       <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
