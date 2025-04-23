@@ -34,75 +34,99 @@ const RegisterPage = () => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
- /*    const validate = () => {
-        const newErrors = {};
-        if (!form.username) newErrors.username = "Username is required";
-        if (!form.email) newErrors.email = "Email is required";
-        if (!form.password) newErrors.password = "Password is required";
-        if (form.password !== form.confirmPassword)
-            newErrors.confirmPassword = "Passwords do not match";
-        return newErrors;
-    }; */
+     const validate = () => {
+       const newErrors = {};
+
+       // Username validation
+       if (!form.username) {
+         newErrors.username = "Username is required";
+       } else if (form.username.length < 3) {
+         newErrors.username = "Username must be at least 3 characters";
+       }
+
+       // Email validation
+       if (!form.email) {
+         newErrors.email = "Email is required";
+       } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+         newErrors.email = "Please enter a valid email address";
+       }
+
+       // Password validation
+       if (!form.password) {
+         newErrors.password = "Password is required";
+       } else if (form.password.length < 6) {
+         newErrors.password = "Password must be at least 6 characters";
+       }
+
+       // Confirm Password validation
+       if (!form.confirmPassword) {
+         newErrors.confirmPassword = "Please confirm your password";
+       } else if (form.password !== form.confirmPassword) {
+         newErrors.confirmPassword = "Passwords do not match";
+       }
+
+       return newErrors;
+     };
 
     const handleSubmit = (e) => {
       e.preventDefault();
+      const validationErrors = validate();
 
-      console.log("Form submitted:", form); // Debug log
-
-      fetch(registrationUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(form),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Registration response:", data); // Debug log
-          if (data.user) {
-            Swal.fire({
-              title: "Success!",
-              text: "Registration completed successfully",
-              icon: "success",
-              confirmButtonText: "Go to Login",
-              background: "#2C3034",
-              color: "#fff",
-              confirmButtonColor: "#0DCAF0",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                setForm(initialFormState);
-                navigate("/login");
-              }
-            });
-            login(form.email, form.password).then(() => navigate("/admin"));
-          } else {
+      if (Object.keys(validationErrors).length === 0) {
+        // Form is valid, proceed with submission
+        fetch(registrationUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(form),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("Registration response:", data);
+            if (data.user) {
+              Swal.fire({
+                title: "Success!",
+                text: "Registration completed successfully",
+                icon: "success",
+                confirmButtonText: "Go to Login",
+                background: "#2C3034",
+                color: "#fff",
+                confirmButtonColor: "#0DCAF0",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  setForm(initialFormState);
+                  navigate("/login");
+                }
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Registration failed. Please check your data.",
+                icon: "error",
+                confirmButtonText: "Try Again",
+                background: "#2C3034",
+                color: "#fff",
+                confirmButtonColor: "#0DCAF0",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error during registration:", error);
             Swal.fire({
               title: "Error!",
-              text: "Registration failed. Please check your data.",
+              text: "Something went wrong. Please try again.",
               icon: "error",
-              confirmButtonText: "Try Again",
+              confirmButtonText: "OK",
               background: "#2C3034",
               color: "#fff",
               confirmButtonColor: "#0DCAF0",
             });
-          }
-        })
-        .catch((error) => {
-          console.error("Error during registration:", error);
-          Swal.fire({
-            title: "Error!",
-            text: "Something went wrong. Please try again.",
-            icon: "error",
-            confirmButtonText: "OK",
-            background: "#2C3034",
-            color: "#fff",
-            confirmButtonColor: "#0DCAF0",
           });
-        })
-        .finally(() => {
-          setForm(initialFormState);
-        });
+      } else {
+        setErrors(validationErrors);
+      }
     };
 
         /* const validationErrors = validate();

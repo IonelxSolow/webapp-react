@@ -15,10 +15,15 @@ export default function Admin() {
   
   useEffect(() => {
     // setIsLoading(true);
-    if (!user) {
+    /* if (!user) {
       navigate("/login");
       
-    }
+    } */
+     const checkAuth = setTimeout(() => {
+      if (!user) {
+        navigate("/login");
+        return;
+      }
 
        fetch("http://localhost:3000/api/v1/movies")
          .then((response) => response.json())
@@ -33,7 +38,13 @@ export default function Admin() {
         /*  .finally(() => {
            setIsLoading(false);
          }); */
-     }, []);
+     }, 200);
+
+    return () => clearTimeout(checkAuth);
+  }, [user, navigate]); //Add user to dependencies
+
+  // Only render content if user is authenticated
+  if (!user) return null;
 
     return (
       <div className="container mt-5 text-white">
