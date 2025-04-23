@@ -1,9 +1,9 @@
 //import { Outlet } from "react-router-dom";
 // import Header from "../components/Header";
 // import Footer from "../components/Footer";
-import { useContext } from "react";
-import GlobalContext from "../contexts/GlobalContext";
-import LoaderComponent from "../components/reviews/LoaderComponent";
+//import { useContext } from "react";
+//import GlobalContext from "../contexts/GlobalContext";
+//import LoaderComponent from "../components/reviews/LoaderComponent";
 import { NavLink } from "react-router-dom";
 
 export default function LoggedLayout() {

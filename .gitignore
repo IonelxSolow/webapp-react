@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 README.md
+LoggedLayout.jsx
+oldLogin.jsx
+oldRegister.jsx
 
 # Editor directories and files
 .vscode/*

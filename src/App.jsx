@@ -10,7 +10,7 @@ import RegisterPage from "./pages/auth/RegisterPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 // User pages
-import LoggedLayout from "./layouts/LoggedLayout.jsx";
+//import LoggedLayout from "./layouts/LoggedLayout.jsx";
 
 // Admin pages
 import Admin from "./pages/admin/Admin.jsx";
@@ -43,9 +43,9 @@ function App() {
               <Route path="/admin/movie/create" Component={CreateMovie} />
             </Route>
 
-            <Route Component={LoggedLayout}>
+           {/*  <Route Component={LoggedLayout}>
               <Route path="/loggedin" Component={LoggedLayout} />
-            </Route>
+            </Route> */}
             
           </Routes>
         </BrowserRouter>
