@@ -15,23 +15,19 @@ FRONT DAY1:
 
 FRONT DAY2:
 
-- [x] Add 404 route
-- [x] Handle 404 error for single books (useNavigate)
-- [x] Handle the review form submission
-- [x] Implement review form validation
-- [x] Add global context for the loader
-- [x] FRONT: Add authentication form (login/register)
-- [x] Native implementation EXPRESS BACKEND API SERVER: Implement authentication routes (login/register)
-- [x] Add average rating ( EXPRESS: update the sql query to also get the ROUND(AVG(vote)) as average_rating )
+- [ ] Add 404 route
+- [ ] Handle 404 error for single books (useNavigate)
+- [ ] Handle the review form submission
+- [ ] Implement review form validation
+- [ ] Add average rating ( EXPRESS: update the sql query to also get the ROUND(AVG(vote)) as average_rating )
+- [ ] Add global context for the loader
 
 **extras:**
 
 DAY 4:
 
-- [ ] FRONT: Add authentication and context (useContext) to manage the user state
-- [ ] EXPRESS BACKEND API SERVER: Implement authentication routes (login/register) 
-- [ ] FRONT/BACK: add a form for the authenticated user to add a new book.
-- [ ] FRONT/BACK: add file input to upload a book cover and handle the upload (use multer for the backend)
+- [ ] FRONT: Add authentication  
+- [ ] BACK: Implement authentication middleware  
 
 DAY 5:
 

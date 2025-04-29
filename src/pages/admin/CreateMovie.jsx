@@ -12,10 +12,10 @@ export default function CreateMovie() {
         genre: '',
         release_year: '',
         abstract: '',
-        image: null
+        image: '',
     });
 
-    const handleChange = (e) => {
+   /*  const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
@@ -28,11 +28,33 @@ export default function CreateMovie() {
             ...prevState,
             image: e.target.files[0]
         }));
-    };
+    }; */
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
+      e.preventDefault();
+
+     /*  const form = new FormData();
+      form.append("title", formData.title);
+      form.append("director", formData.director);
+      form.append("genre", formData.genre);
+      form.append("release_year", formData.release_year);
+      form.append("abstract", formData.abstract);
+      form.append("image", formData.image);
+
+      fetch("http://localhost:3000/api/v1/movies/create", {
+        method: "POST",
+        body: form,
+        credentials: "include",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data, "Movie created successfully");
+        })
+        .catch((err) => {
+          console.log(err, "Error creating movie");
+        }); */
+
+      setIsLoading(true);
 
         const formDataToSend = new FormData();
         Object.keys(formData).forEach(key => {
@@ -40,7 +62,7 @@ export default function CreateMovie() {
         });
 
         try {
-            const response = await fetch('http://localhost:3000/api/v1/movies', {
+            const response = await fetch('http://localhost:3000/api/v1/movies/create', {
                 method: 'POST',
                 body: formDataToSend,
             });
@@ -83,7 +105,7 @@ export default function CreateMovie() {
                     <div className="card bg-secondary text-white">
                         <div className="card-body">
                             <h1 className="card-title text-center mb-4">Create Movie</h1>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} encType='multipart/form-data'>
                                 <div className="mb-3">
                                     <label htmlFor="title" className="form-label">Title</label>
                                     <input
@@ -92,7 +114,7 @@ export default function CreateMovie() {
                                         id="title"
                                         name="title"
                                         value={formData.title}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                         required
                                     />
                                 </div>
@@ -105,7 +127,7 @@ export default function CreateMovie() {
                                         id="director"
                                         name="director"
                                         value={formData.director}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, director: e.target.value })}
                                         required
                                     />
                                 </div>
@@ -118,7 +140,7 @@ export default function CreateMovie() {
                                         id="genre"
                                         name="genre"
                                         value={formData.genre}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
                                         required
                                     />
                                 </div>
@@ -131,7 +153,7 @@ export default function CreateMovie() {
                                         id="release_year"
                                         name="release_year"
                                         value={formData.release_year}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, release_year: e.target.value })}
                                         min="1900"
                                         max={new Date().getFullYear()}
                                         required
@@ -145,7 +167,7 @@ export default function CreateMovie() {
                                         id="abstract"
                                         name="abstract"
                                         value={formData.abstract}
-                                        onChange={handleChange}
+                                        onChange={(e) => setFormData({ ...formData, abstract: e.target.value })}
                                         rows="3"
                                         required
                                     ></textarea>
@@ -158,7 +180,7 @@ export default function CreateMovie() {
                                         className="form-control bg-dark text-light"
                                         id="image"
                                         name="image"
-                                        onChange={handleImageChange}
+                                        onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })}
                                         accept="image/*"
                                         required
                                     />
